@@ -116,22 +116,6 @@ flex / grid 要素に直接付けると、文言が `<wbr>` の位置で別々�
 </a>
 ```
 
-## ファイル構成
-
-```
-├── README.md
-├── css/
-│   └── phrase-wrap.css             # .u-phrase-wrap / .u-phrase-wrap--balance の定義
-├── inc/
-│   └── phrase-wrap.php             # WordPress でのエンキュー例
-└── js/
-    ├── phrase-wrap.js              # TARGET_SELECTORS の要素に BudouX を適用する
-    └── vendor/
-        ├── budoux-ja.js            # BudouX 0.7.0（日本語モデルのみ）
-        ├── budoux-ja.js.LEGAL.txt  # 著作権表示
-        └── budoux-ja.js.LICENSE.txt # Apache License 2.0 全文
-```
-
 ## 参考リンク
 
 - [wbrタグを使った改行制御のテクニック｜株式会社アテンド](https://www.attend.jp/html-250623)
