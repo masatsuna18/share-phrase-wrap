@@ -1,4 +1,4 @@
-# phrase-wrap：日本語を文節の切れ目で改行させる
+# phrase-wrap
 
 見出しやボタンの文言が、単語の途中で改行されるのを防ぐための部品です。
 要素に `u-phrase-wrap` クラスを付けると、文節の切れ目で改行されるようになります。
@@ -19,7 +19,7 @@
 
 見出し・リード文・ボタンの文言など、短いテキスト向けです。長い本文に使うと行末が不揃いになり、かえって読みにくくなることがあります。
 
-## 改行の仕組み
+## 仕組み
 
 `<br>` は「必ず改行する」、`<wbr>` は「1行に収まらないときだけ、ここで改行してよい」という意味のタグです。文節の切れ目に `<wbr>` を入れ、次の CSS で `<wbr>` 以外の位置での改行を止めると、どの画面幅でも文節の切れ目で改行されます。
 
@@ -38,13 +38,13 @@ BudouX は日本語モデルのみに絞ったビルド（約28KB、gzip 圧縮�
 
 ## 導入手順（WordPress）
 
-### 1. ファイルをテーマにコピーする
+### 1. ファイルのコピー
 
 `css/` と `js/` を有効化中のテーマ（子テーマを使う場合は子テーマ）の直下にコピーします。
 
 `js/vendor/` の3ファイルは、BudouX のライセンス（Apache License 2.0）の再配布条件を満たすため、必ずセットで扱ってください。
 
-### 2. functions.php にエンキューを追加する
+### 2. functions.php への追記
 
 `inc/phrase-wrap.php` の内容を `functions.php` に追記します。
 
@@ -55,7 +55,7 @@ add_action('wp_enqueue_scripts', function () {
 });
 ```
 
-### 3. CSS を追加する
+### 3. CSS の追加
 
 `css/phrase-wrap.css` の内容を、テーマの CSS / SCSS に書き写します。
 
@@ -69,7 +69,7 @@ add_action('wp_enqueue_scripts', function () {
 }
 ```
 
-### 4. 要素にクラスを付ける
+### 4. クラスの指定
 
 ```html
 <h2 class="u-phrase-wrap">水の道をつくり、地域の暮らしを支える。</h2>
@@ -77,7 +77,7 @@ add_action('wp_enqueue_scripts', function () {
 
 ブロックエディターでは、ブロックの「高度な設定 → 追加 CSS クラス」に指定します。
 
-## 既存のクラスに適用する
+## HTML を編集できない要素に使う
 
 親テーマが出力する見出しなど、HTML を直接編集しにくい要素には、`js/phrase-wrap.js` の `TARGET_SELECTORS` にセレクタを追記します。
 
@@ -90,9 +90,9 @@ const TARGET_SELECTORS = [
 ];
 ```
 
-## 行の長さを揃える：`.u-phrase-wrap--balance`
+## 行の長さを揃える
 
-`text-wrap: balance` により、文節の切れ目を保ったまま各行の長さを揃えます。必ず `u-phrase-wrap` と併記します。
+`u-phrase-wrap--balance` を追加すると、`text-wrap: balance` により文節の切れ目を保ったまま各行の長さが揃います。必ず `u-phrase-wrap` と併記します。
 
 ```
 【u-phrase-wrap のみ】
@@ -108,15 +108,15 @@ const TARGET_SELECTORS = [
 <h2 class="u-phrase-wrap u-phrase-wrap--balance">地域の暮らしを支える水道の仕事、始めてみませんか？</h2>
 ```
 
-## 注意点
+## flex / grid 要素に使う場合
 
-- **flex / grid 要素には直接付けない**：文言が `<wbr>` の位置で別々のアイテムに分かれ、`gap` の余白も文節間に入ります。文言を包んだ要素に付けてください。
+flex / grid 要素に直接付けると、文言が `<wbr>` の位置で別々のアイテムに分かれ、`gap` の余白も文節間に入ります。文言を `<span>` などで包み、その要素に付けてください。
 
-  ```html
-  <a class="c-button" href="/contact/">
-    <span class="u-phrase-wrap">メールでのお問い合わせ</span>
-  </a>
-  ```
+```html
+<a class="c-button" href="/contact/">
+  <span class="u-phrase-wrap">メールでのお問い合わせ</span>
+</a>
+```
 
 ## ファイル構成
 
@@ -134,7 +134,7 @@ const TARGET_SELECTORS = [
         └── budoux-ja.js.LICENSE.txt # Apache License 2.0 全文
 ```
 
-## 参考
+## 参考リンク
 
 - [wbrタグを使った改行制御のテクニック｜株式会社アテンド](https://www.attend.jp/html-250623)
 - [CSSで文節の折り返しを！ br・wbrとauto-phraseの活用術 - ICS MEDIA](https://ics.media/entry/241105/)
