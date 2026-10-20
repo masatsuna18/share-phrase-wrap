@@ -1,0 +1,9 @@
+/* ## 文字列の折り返し制御 */
+
+.u-phrase-wrap {
+  word-break: auto-phrase;
+}
+
+.u-phrase-wrap--balance {
+  text-wrap: balance;
+}

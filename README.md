@@ -1,0 +1,140 @@
+# phrase-wrap：日本語を文節の切れ目で改行させる
+
+見出しやボタンの文言が、単語の途中で改行されるのを防ぐための部品です。
+要素に `u-phrase-wrap` クラスを付けると、文節の切れ目で改行されるようになります。
+
+```
+【対策前】
+水の道をつくり、地域の暮らしを支え
+る。
+
+【対策後】
+水の道をつくり、
+地域の暮らしを支える。
+```
+
+```html
+<h2 class="u-phrase-wrap">水の道をつくり、地域の暮らしを支える。</h2>
+```
+
+見出し・リード文・ボタンの文言など、短いテキスト向けです。長い本文に使うと行末が不揃いになり、かえって読みにくくなることがあります。
+
+## 改行の仕組み
+
+`<br>` は「必ず改行する」、`<wbr>` は「1行に収まらないときだけ、ここで改行してよい」という意味のタグです。文節の切れ目に `<wbr>` を入れ、次の CSS で `<wbr>` 以外の位置での改行を止めると、どの画面幅でも文節の切れ目で改行されます。
+
+```css
+.text {
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+```
+
+`keep-all` は日本語の途中での改行を止めます。`overflow-wrap: anywhere` は、そのままでははみ出す場合に限り、`<wbr>` のない位置でも改行を許可する保険です。文節が要素の幅より長い場合や、URL・長い英単語が含まれる場合でも、文字がはみ出さずに改行されます。
+
+ただし、手作業で `<wbr>` を入れると文言の変更に追従できません。phrase-wrap では、Google 製の JavaScript ライブラリ BudouX が文節の切れ目を自動で判定し、`<wbr>` の挿入と上記 CSS の付与を行います。JavaScript の適用前は通常の改行で表示されるため、Chrome / Edge（119 以降）では CSS の `word-break: auto-phrase` で表示直後から文節で改行させ、適用時の一瞬のカクつきを抑えています。
+
+BudouX は日本語モデルのみに絞ったビルド（約28KB、gzip 圧縮時は約11KB）です。描画をブロックしない位置で読み込み、HTML の解析完了後に対象の要素だけへ適用するため、ページの表示を妨げません。
+
+## 導入手順（WordPress）
+
+### 1. ファイルをテーマにコピーする
+
+`css/` と `js/` を有効化中のテーマ（子テーマを使う場合は子テーマ）の直下にコピーします。
+
+`js/vendor/` の3ファイルは、BudouX のライセンス（Apache License 2.0）の再配布条件を満たすため、必ずセットで扱ってください。
+
+### 2. functions.php にエンキューを追加する
+
+`inc/phrase-wrap.php` の内容を `functions.php` に追記します。
+
+```php
+add_action('wp_enqueue_scripts', function () {
+    wp_enqueue_script('budoux-ja', get_stylesheet_directory_uri() . '/js/vendor/budoux-ja.js', array(), '0.7.0', true);
+    wp_enqueue_script('phrase-wrap', get_stylesheet_directory_uri() . '/js/phrase-wrap.js', array('budoux-ja'), '1.0.0', true);
+});
+```
+
+### 3. CSS を追加する
+
+`css/phrase-wrap.css` の内容を、テーマの CSS / SCSS に書き写します。
+
+```css
+.u-phrase-wrap {
+  word-break: auto-phrase;
+}
+
+.u-phrase-wrap--balance {
+  text-wrap: balance;
+}
+```
+
+### 4. 要素にクラスを付ける
+
+```html
+<h2 class="u-phrase-wrap">水の道をつくり、地域の暮らしを支える。</h2>
+```
+
+ブロックエディターでは、ブロックの「高度な設定 → 追加 CSS クラス」に指定します。
+
+## 既存のクラスに適用する
+
+親テーマが出力する見出しなど、HTML を直接編集しにくい要素には、`js/phrase-wrap.js` の `TARGET_SELECTORS` にセレクタを追記します。
+
+```js
+const TARGET_SELECTORS = [
+  '.u-phrase-wrap',
+  '.headline',
+  '.sub_headline',
+  '.split_content .desc',
+];
+```
+
+## 行の長さを揃える：`.u-phrase-wrap--balance`
+
+`text-wrap: balance` により、文節の切れ目を保ったまま各行の長さを揃えます。必ず `u-phrase-wrap` と併記します。
+
+```
+【u-phrase-wrap のみ】
+地域の暮らしを支える水道の仕事、
+始めてみませんか？
+
+【u-phrase-wrap--balance を追加】
+地域の暮らしを支える
+水道の仕事、始めてみませんか？
+```
+
+```html
+<h2 class="u-phrase-wrap u-phrase-wrap--balance">地域の暮らしを支える水道の仕事、始めてみませんか？</h2>
+```
+
+## 注意点
+
+- **flex / grid 要素には直接付けない**：文言が `<wbr>` の位置で別々のアイテムに分かれ、`gap` の余白も文節間に入ります。文言を包んだ要素に付けてください。
+
+  ```html
+  <a class="c-button" href="/contact/">
+    <span class="u-phrase-wrap">メールでのお問い合わせ</span>
+  </a>
+  ```
+
+## ファイル構成
+
+```
+├── README.md
+├── css/
+│   └── phrase-wrap.css             # .u-phrase-wrap / .u-phrase-wrap--balance の定義
+├── inc/
+│   └── phrase-wrap.php             # WordPress でのエンキュー例
+└── js/
+    ├── phrase-wrap.js              # TARGET_SELECTORS の要素に BudouX を適用する
+    └── vendor/
+        ├── budoux-ja.js            # BudouX 0.7.0（日本語モデルのみ）
+        ├── budoux-ja.js.LEGAL.txt  # 著作権表示
+        └── budoux-ja.js.LICENSE.txt # Apache License 2.0 全文
+```
+
+## 参考
+
+- [wbrタグを使った改行制御のテクニック｜株式会社アテンド](https://www.attend.jp/html-250623)
+- [CSSで文節の折り返しを！ br・wbrとauto-phraseの活用術 - ICS MEDIA](https://ics.media/entry/241105/)
