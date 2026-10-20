@@ -77,7 +77,7 @@ add_action('wp_enqueue_scripts', function () {
 
 ブロックエディターでは、ブロックの「高度な設定 → 追加 CSS クラス」に指定します。
 
-## HTML を編集できない要素に使う
+## HTMLを編集できない（したくない）要素に使う
 
 親テーマが出力する見出しなど、HTML を直接編集しにくい要素には、`js/phrase-wrap.js` の `TARGET_SELECTORS` にセレクタを追記します。
 
