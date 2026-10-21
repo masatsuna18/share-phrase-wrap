@@ -75,19 +75,6 @@ add_action('wp_enqueue_scripts', function () {
 <h2 class="u-phrase-wrap">水の道をつくり、地域の暮らしを支える。</h2>
 ```
 
-## HTMLを編集できない（したくない）要素に使う場合
-
-親テーマが出力する見出しなど、HTMLを直接編集しにくい要素には、`js/phrase-wrap.js`の`TARGET_SELECTORS`にセレクタを追記します。
-
-```js
-const TARGET_SELECTORS = [
-  '.u-phrase-wrap',
-  '.headline',
-  '.sub_headline',
-  '.split_content .desc',
-];
-```
-
 ## 行の長さを揃える
 
 `u-phrase-wrap--balance`を追加すると、`text-wrap: balance`により文節の切れ目を保ったまま各行の長さが揃います。必ず`u-phrase-wrap`と併記します。
@@ -104,6 +91,19 @@ const TARGET_SELECTORS = [
 
 ```html
 <h2 class="u-phrase-wrap u-phrase-wrap--balance">地域の暮らしを支える水道の仕事、始めてみませんか？</h2>
+```
+
+## HTMLを編集できない（したくない）要素に使う場合
+
+親テーマが出力する見出しなど、HTMLを直接編集しにくい要素には、`js/phrase-wrap.js`の`TARGET_SELECTORS`にセレクタを追記します。
+
+```js
+const TARGET_SELECTORS = [
+  '.u-phrase-wrap',
+  '.headline',
+  '.sub_headline',
+  '.split_content .desc',
+];
 ```
 
 ## flex / grid要素に使う場合
