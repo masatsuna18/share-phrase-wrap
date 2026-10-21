@@ -5,16 +5,16 @@
 
 ```
 【適用前】
-水の道をつくり、地域の暮らしを支え
-る。
+いつもの街並みが、すこしだけ色づ
+く。
 
 【適用後】
-水の道をつくり、
-地域の暮らしを支える。
+いつもの街並みが、
+すこしだけ色づく。
 ```
 
 ```html
-<h2 class="u-phrase-wrap">水の道をつくり、地域の暮らしを支える。</h2>
+<h2 class="u-phrase-wrap">いつもの街並みが、すこしだけ色づく。</h2>
 ```
 
 ## 仕組み
@@ -72,7 +72,7 @@ add_action('wp_enqueue_scripts', function () {
 ### 4. クラスの指定
 
 ```html
-<h2 class="u-phrase-wrap">水の道をつくり、地域の暮らしを支える。</h2>
+<h2 class="u-phrase-wrap">いつもの街並みが、すこしだけ色づく。</h2>
 ```
 
 ## 行の長さを揃える
@@ -81,16 +81,16 @@ add_action('wp_enqueue_scripts', function () {
 
 ```
 【u-phrase-wrapのみ】
-地域の暮らしを支える水道の仕事、
-始めてみませんか？
+暮らしに寄り添う、心地よい
+デザインを。
 
 【u-phrase-wrap--balanceを追加】
-地域の暮らしを支える
-水道の仕事、始めてみませんか？
+暮らしに寄り添う、
+心地よいデザインを。
 ```
 
 ```html
-<h2 class="u-phrase-wrap u-phrase-wrap--balance">地域の暮らしを支える水道の仕事、始めてみませんか？</h2>
+<h2 class="u-phrase-wrap u-phrase-wrap--balance">暮らしに寄り添う、心地よいデザインを。</h2>
 ```
 
 ## HTMLを編集できない（したくない）要素に使う場合
