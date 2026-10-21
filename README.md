@@ -1,7 +1,7 @@
 ## 概要
 
 見出しやボタンなどの文言が、単語の途中で改行されるのを防ぐためのパーツです。  
-要素に `u-phrase-wrap` クラスを付けると、文節の切れ目で改行されるようになります。
+要素に`u-phrase-wrap`クラスを付けると、文節の切れ目で改行されるようになります。
 
 ```
 【適用前】
@@ -19,7 +19,7 @@
 
 ## 仕組み
 
-`<br>` は「必ず改行する」、`<wbr>` は「1行に収まらないときだけ、ここで改行してよい」という意味のタグです。文節の切れ目に `<wbr>` を入れ、次の CSS で `<wbr>` 以外の位置での改行を止めると、どの画面幅でも文節の切れ目で改行されます。
+`<br>`は「必ず改行する」、`<wbr>`は「1行に収まらないときだけ、ここで改行してよい」という意味のタグです。文節の切れ目に`<wbr>`を入れ、次のCSSで`<wbr>`以外の位置での改行を止めると、どの画面幅でも文節の切れ目で改行されます。
 
 ```css
 .text {
@@ -28,9 +28,9 @@
 }
 ```
 
-`keep-all` は日本語の途中での改行を止めます。`overflow-wrap: anywhere` は、そのままでははみ出す場合に限り、`<wbr>` のない位置でも改行を許可する保険です。文節が要素の幅より長い場合や、URL・長い英単語が含まれる場合でも、文字がはみ出さずに改行されます。
+`keep-all`は日本語の途中での改行を止めます。`overflow-wrap: anywhere`は、そのままでははみ出す場合に限り、`<wbr>`のない位置でも改行を許可する保険です。文節が要素の幅より長い場合や、URL・長い英単語が含まれる場合でも、文字がはみ出さずに改行されます。
 
-ただし、手作業で `<wbr>` を入れると文言の変更に追従できません。phrase-wrap では、Google 製の JavaScript ライブラリ BudouX が文節の切れ目を自動で判定し、`<wbr>` の挿入と上記 CSS の付与を行います。
+ただし、手作業で`<wbr>`を入れると文言の変更に追従できません。phrase-wrapでは、Google製のJavaScriptライブラリBudouXが文節の切れ目を自動で判定し、`<wbr>`の挿入と上記CSSの付与を行います。
 
 BudouXは日本語専用の軽量版（約11KB）のため、ページのパフォーマンスへの影響はほぼありません。
 
@@ -38,13 +38,13 @@ BudouXは日本語専用の軽量版（約11KB）のため、ページのパフ�
 
 ### 1. ファイルのコピー
 
-`css/` と `js/` を有効化中のテーマ（子テーマを使う場合は子テーマ）の直下にコピーします。
+`css/`と`js/`を有効化中のテーマ（子テーマを使う場合は子テーマ）の直下にコピーします。
 
-`js/vendor/` の3ファイルは、BudouX のライセンス（Apache License 2.0）の再配布条件を満たすため、必ずセットで扱ってください。
+`js/vendor/`の3ファイルは、BudouXのライセンス（Apache License 2.0）の再配布条件を満たすため、必ずセットで扱ってください。
 
-### 2. functions.php への追記
+### 2. functions.phpへの追記
 
-`inc/phrase-wrap.php` の内容を `functions.php` に追記します。
+`inc/phrase-wrap.php`の内容を`functions.php`に追記します。
 
 ```php
 add_action('wp_enqueue_scripts', function () {
@@ -53,9 +53,9 @@ add_action('wp_enqueue_scripts', function () {
 });
 ```
 
-### 3. CSS の追加
+### 3. CSSの追加
 
-`css/phrase-wrap.css` の内容を、テーマの CSS / SCSS に書き写します。
+`css/phrase-wrap.css`の内容を、テーマのCSS / SCSSに書き写します。
 
 ```css
 .u-phrase-wrap {
@@ -77,7 +77,7 @@ add_action('wp_enqueue_scripts', function () {
 
 ## HTMLを編集できない（したくない）要素に使う場合
 
-親テーマが出力する見出しなど、HTML を直接編集しにくい要素には、`js/phrase-wrap.js` の `TARGET_SELECTORS` にセレクタを追記します。
+親テーマが出力する見出しなど、HTMLを直接編集しにくい要素には、`js/phrase-wrap.js`の`TARGET_SELECTORS`にセレクタを追記します。
 
 ```js
 const TARGET_SELECTORS = [
@@ -90,14 +90,14 @@ const TARGET_SELECTORS = [
 
 ## 行の長さを揃える
 
-`u-phrase-wrap--balance` を追加すると、`text-wrap: balance` により文節の切れ目を保ったまま各行の長さが揃います。必ず `u-phrase-wrap` と併記します。
+`u-phrase-wrap--balance`を追加すると、`text-wrap: balance`により文節の切れ目を保ったまま各行の長さが揃います。必ず`u-phrase-wrap`と併記します。
 
 ```
-【u-phrase-wrap のみ】
+【u-phrase-wrapのみ】
 地域の暮らしを支える水道の仕事、
 始めてみませんか？
 
-【u-phrase-wrap--balance を追加】
+【u-phrase-wrap--balanceを追加】
 地域の暮らしを支える
 水道の仕事、始めてみませんか？
 ```
@@ -106,9 +106,9 @@ const TARGET_SELECTORS = [
 <h2 class="u-phrase-wrap u-phrase-wrap--balance">地域の暮らしを支える水道の仕事、始めてみませんか？</h2>
 ```
 
-## flex / grid 要素に使う場合
+## flex / grid要素に使う場合
 
-flex / grid 要素に直接付けると、文言が `<wbr>` の位置で別々のアイテムに分かれ、`gap` の余白も文節間に入ります。文言を `<span>` などで包み、その要素に付けてください。
+flex / grid要素に直接付けると、文言が`<wbr>`の位置で別々のアイテムに分かれ、`gap`の余白も文節間に入ります。文言を`<span>`などで包み、その要素に付けてください。
 
 ```html
 <a class="c-button" href="/contact/">
