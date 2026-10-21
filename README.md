@@ -44,7 +44,7 @@ BudouXは日本語専用の軽量版（約11KB）のため、ページのパフ�
 
 ### 2. functions.phpへの追記
 
-`inc/phrase-wrap.php`の内容を`functions.php`に追記します。
+本リポジトリの`functions.php`の内容を、テーマの`functions.php`に追記します。
 
 ```php
 add_action('wp_enqueue_scripts', function () {
