@@ -58,6 +58,8 @@ add_action('wp_enqueue_scripts', function () {
 `css/phrase-wrap.css`の内容を、テーマのCSS / SCSSに書き写します。
 
 ```css
+/* ## 文字列の折り返し制御 */
+
 .u-phrase-wrap {
   word-break: auto-phrase;
 }
