@@ -46,7 +46,7 @@ GitHubの「Code」→「Download ZIP」から、必要なファイル一式を�
 
 `js/vendor/`の3ファイルは、BudouXのライセンス（Apache License 2.0）の再配布条件を満たすため、必ずセットで扱ってください。
 
-### 2. functions.phpへの追記
+### 2. JSの読み込み
 
 本リポジトリの`functions.php`の内容を、テーマの`functions.php`に追記します。
 
